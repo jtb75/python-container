@@ -7,7 +7,7 @@ pipeline {
                 sh """
                 pwd
                 ls
-                docker build -t python:latest .
+                docker build -t flaskapp-hw:latest .
                 """
             }
         }
@@ -17,7 +17,7 @@ pipeline {
                 cert: '',
                 dockerAddress: 'tcp://192.168.1.215:2376',
                 ignoreImageBuildTime: true,
-                image: 'python:latest',
+                image: 'flaskapp-hw:latest',
                 key: '',
                 logLevel: 'info',
                 podmanPath: '',
