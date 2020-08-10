@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
+                echo 'Building Image..'
                 sh """
                 docker build -t flaskapp-hw:latest .
                 """
@@ -11,6 +11,7 @@ pipeline {
         }
         stage('Scan') {
             steps {
+                echo 'Scanning Image..'
                 prismaCloudScanImage ca: '',
                 cert: '',
                 dockerAddress: 'tcp://192.168.1.215:2376',
@@ -25,6 +26,7 @@ pipeline {
         }
         stage ('Publish') {
             steps {
+                echo 'Publishing Results..'
                 prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
             }
         }
