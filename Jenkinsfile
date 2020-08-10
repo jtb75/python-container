@@ -5,7 +5,7 @@ pipeline {
             steps {
                 echo 'Building Image..'
                 sh """
-                docker build -t flaskapp-hw:latest .
+                docker build -t webapps/flaskapp-hw:latest .
                 """
             }
         }
@@ -16,7 +16,7 @@ pipeline {
                 cert: '',
                 dockerAddress: 'tcp://192.168.1.215:2376',
                 ignoreImageBuildTime: true,
-                image: 'flaskapp-hw:latest',
+                image: 'webapps/flaskapp-hw:latest',
                 key: '',
                 logLevel: 'info',
                 podmanPath: '',
