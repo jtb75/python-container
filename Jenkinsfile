@@ -17,7 +17,7 @@ pipeline {
             steps {
                 prismaCloudScanImage ca: '',
                 cert: '',
-                dockerAddress: 'unix:///var/run/docker.sock',
+                dockerAddress: 'tcp://192.168.1.215:2376',
                 ignoreImageBuildTime: true,
                 image: 'python:latest',
                 key: '',
