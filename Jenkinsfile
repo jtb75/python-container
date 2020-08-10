@@ -1,9 +1,16 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent { label 'dind-ssh-agent' }
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'python --version'
+                echo 'Building..'
+                sh """
+                mkdir myproj
+                cd myproj
+                echo 'FROM python:3.5.1' > Dockerfile
+                echo 'LABEL project="DemoProject"' >> Dockerfile
+                docker build -t python:latest .
+                """
             }
         }
     }
