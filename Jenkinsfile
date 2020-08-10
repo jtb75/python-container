@@ -1,4 +1,4 @@
-mapipeline {
+pipeline {
     agent { label 'dind-ssh-agent' }
     stages {
         stage('Build') {
