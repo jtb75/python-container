@@ -5,8 +5,6 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh """
-                pwd
-                ls
                 docker build -t flaskapp-hw:latest .
                 """
             }
