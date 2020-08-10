@@ -1,4 +1,4 @@
-pipeline {
+mapipeline {
     agent { label 'dind-ssh-agent' }
     stages {
         stage('Build') {
@@ -8,7 +8,7 @@ pipeline {
                 mkdir myproj
                 cd myproj
                 echo 'FROM python:3.5.1' > Dockerfile
-                echo 'LABEL project="DemoProject"' >> Dockerfile
+                echo 'LABEL project="DevImages"' >> Dockerfile
                 docker build -t python:latest .
                 """
             }
