@@ -9,6 +9,9 @@ pipeline {
                 cd myproj
                 echo 'FROM python:3.5.1' > Dockerfile
                 echo 'LABEL project="DevImages"' >> Dockerfile
+                echo 'RUN useradd -ms /bin/bash  pyuser' >> Dockerfile
+                echo 'RUN echo 'pyuser:pyuser' | chpasswd' >> Dockerfile
+                echo 'USER pyuser' >> Dockerfile
                 docker build -t python:latest .
                 """
             }
