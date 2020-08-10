@@ -35,7 +35,11 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'harbor_cred', passwordVariable: 'HARBOR_PW', usernameVariable: 'HARBOR_USER')]) {
                     echo 'Pushing..'
                     sh """
+                    docker tag webapps/flaskapp-hw:latest 192.168.1.211:80/webapps/flaskapp-hw:$BUILD_NUMBER
+                    docker tag webapps/flaskapp-hw:latest 192.168.1.211:80/webapps/flaskapp-hw:latest
                     docker login --username ${HARBOR_USER} --password ${HARBOR_PW} 192.168.1.211:80
+                    docker push 192.168.1.211:80/webapps/flaskapp-hw:$BUILD_NUMBER
+                    docker push 192.168.1.211:80/webapps/flaskapp-hw:latest
                     """
                 }
             }
@@ -44,6 +48,8 @@ pipeline {
             steps {
                 echo 'Cleaning up Image..'
                 sh """
+                docker rmi 192.168.1.211:80/webapps/flaskapp-hw:$BUILD_NUMBER
+                docker rmi 192.168.1.211:80/webapps/flaskapp-hw:latest
                 docker rmi webapps/flaskapp-hw:latest
                 """
             }
