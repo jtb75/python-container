@@ -30,5 +30,14 @@ pipeline {
                 prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
             }
         }
+        stage ('Cleanup') {
+            steps {
+                echo 'Cleaning up Image..'
+                sh """
+                docker rmi webapps/flaskapp-hw:latest
+                """
+            }
+        }
+
     }
 }
