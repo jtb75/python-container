@@ -30,6 +30,15 @@ pipeline {
                 prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
             }
         }
+        stage ('Push Embedded Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'harbor_cred', passwordVariable: 'HARBOR_PW', usernameVariable: 'HARBOR_USER')]) {
+                echo 'Pushing..'
+                sh """
+                docker login --username ${HARBOR_USER} --password ${HARBOR_PW} 192.168.1.211:80
+                """
+            }
+        }
         stage ('Cleanup') {
             steps {
                 echo 'Cleaning up Image..'
