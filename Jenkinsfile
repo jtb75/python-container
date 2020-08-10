@@ -30,10 +30,10 @@ pipeline {
                 prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
             }
         }
-        stage ('Push Embedded Image') {
+        stage ('Push Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'harbor_cred', passwordVariable: 'HARBOR_PW', usernameVariable: 'HARBOR_USER')]) {
-                    echo 'Pushing..'
+                    echo 'Pushing Image to Registry..'
                     sh """
                     docker tag webapps/flaskapp-hw:latest 192.168.1.211:80/webapps/flaskapp-hw:$BUILD_NUMBER
                     docker tag webapps/flaskapp-hw:latest 192.168.1.211:80/webapps/flaskapp-hw:latest
