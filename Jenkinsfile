@@ -3,6 +3,7 @@ node ('jenkins-agent') {
             container('build') {
                 echo 'Building Image..'
                 sh """
+                pwd
                 ls
                 docker build -t webapps/flaskapp-hw:latest .
                 docker tag webapps/flaskapp-hw:latest webapps/flaskapp-hw:$BUILD_NUMBER
