@@ -1,4 +1,4 @@
-node ('build') {
+node ('jenkins-agent') {
         stage('Build') {
             container('build') {
                 echo 'Building Image..'
