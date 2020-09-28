@@ -10,7 +10,7 @@ node ('jenkins-agent') {
                 docker tag webapps/flaskapp-hw:latest webapps/flaskapp-hw:$BUILD_NUMBER
                 """
             }
-        }/*
+        }
         stage('Scan') {
             container('build') {
                 echo 'Scanning Image..'
@@ -23,7 +23,7 @@ node ('jenkins-agent') {
                 sh """chmod 666 prisma-cloud-scan-results.json"""
                 prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
             }
-        }*/
+        }
         stage ('Cleanup') {
             container('build') {
                 echo 'Cleaning up Image..'
