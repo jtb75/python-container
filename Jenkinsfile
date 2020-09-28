@@ -3,9 +3,9 @@ node ('jenkins-agent') {
             container('build') {
                 echo 'Building Image..'
                 sh """
-                pwd
-                ls
-                sleep 300
+                apk add git
+                git clone https://github.com/jtb75/flaskapp-hw.git
+                cd flaskapp-hw
                 docker build -t webapps/flaskapp-hw:latest .
                 docker tag webapps/flaskapp-hw:latest webapps/flaskapp-hw:$BUILD_NUMBER
                 """
