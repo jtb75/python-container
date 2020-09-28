@@ -5,7 +5,6 @@ node ('jenkins-agent') {
                 sh """
                 pwd
                 ls
-                sleep 300
                 docker build -t webapps/flaskapp-hw:latest .
                 docker tag webapps/flaskapp-hw:latest webapps/flaskapp-hw:$BUILD_NUMBER
                 """
@@ -28,8 +27,6 @@ node ('jenkins-agent') {
             container('build') {
                 echo 'Cleaning up Image..'
                 sh """
-                docker rmi 192.168.1.211:80/webapps/flaskapp-hw:$BUILD_NUMBER
-                docker rmi 192.168.1.211:80/webapps/flaskapp-hw:latest
                 docker rmi webapps/flaskapp-hw:$BUILD_NUMBER
                 docker rmi webapps/flaskapp-hw:latest
                 """
