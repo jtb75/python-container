@@ -5,6 +5,7 @@ node ('jenkins-agent') {
                 sh """
                 pwd
                 ls
+                sleep 300
                 docker build -t webapps/flaskapp-hw:latest .
                 docker tag webapps/flaskapp-hw:latest webapps/flaskapp-hw:$BUILD_NUMBER
                 """
