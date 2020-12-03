@@ -14,6 +14,31 @@ node {
                 rm -fr flaskapp-hw
                 """
         }
+        stage ('Scan') {
+                echo 'Scan for Compliance and Vulnerabilities..'
+                prismaCloudScanImage ca: '', cert: '',
+                        dockerAddress: 'unix:///var/run/docker.sock',
+                        ignoreImageBuildTime: true,
+                        image: 'flaskapp-hw:$BUILD_NUMBER',
+                        key: '',
+                        logLevel: 'info',
+                        podmanPath: '',
+                        project: '',
+                        resultsFile: 'prisma-cloud-scan-results.json'
+                prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+        }
+        stage ('Test') {
+                echo 'Running Test Harness..'
+                sh """
+                sleep 5
+                """
+        }
+        stage ('Push') {
+                echo 'Push Image to Registry..'
+                sh """
+                sleep 5
+                """
+        }
         stage ('Cleanup') {
                 echo 'Cleaning up Image..'
                 sh """
