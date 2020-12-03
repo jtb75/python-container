@@ -9,8 +9,8 @@ node {
         stage ('Cleanup') {
             echo 'Cleaning up Image..'
             sh """
-            docker rmi webapps/flaskapp-hw:$BUILD_NUMBER
-            docker rmi webapps/flaskapp-hw:latest
+            pwd
+            ls
             """
         }
 }
