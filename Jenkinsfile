@@ -10,13 +10,14 @@ node {
                 sh """
                 cd flaskapp-hw
                 docker build -t flaskapp-hw:$BUILD_NUMBER .
+                cd ..
+                rm -fr flaskapp-hw
                 """
         }
         stage ('Cleanup') {
                 echo 'Cleaning up Image..'
                 sh """
                 docker rmi flaskapp-hw:$BUILD_NUMBER
-                rm -fr flaskapp-hw
                 """
         }
 }
