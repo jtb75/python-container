@@ -26,6 +26,9 @@ node {
                         project: '',
                         resultsFile: 'prisma-cloud-scan-results.json'
                 prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+                sh """
+                rm prisma-cloud-scan-results.json
+                """
         }
         stage ('Test') {
                 echo 'Running Test Harness..'
