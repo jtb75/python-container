@@ -9,6 +9,7 @@ node {
         stage ('Cleanup') {
             echo 'Cleaning up Image..'
             sh """
+            id
             rm -fr flaskapp-hw
             """
         }
