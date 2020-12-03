@@ -30,13 +30,13 @@ node {
         stage ('Test') {
                 echo 'Running Test Harness..'
                 sh """
-                sleep 5
+                sleep 2
                 """
         }
         stage ('Push') {
                 echo 'Push Image to Registry..'
                 sh """
-                sleep 5
+                sleep 2
                 """
         }
         stage ('Cleanup') {
