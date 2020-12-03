@@ -9,12 +9,13 @@ node {
                 echo 'Building Image..'
                 sh """
                 cd flaskapp-hw
-                docker build -t flaskapp-hw:latest .
+                docker build -t flaskapp-hw:$BUILD_NUMBER .
+                """
         }
         stage ('Cleanup') {
                 echo 'Cleaning up Image..'
                 sh """
-                docker rmi flaskapp-hw:latest
+                docker rmi flaskapp-hw:$BUILD_NUMBER
                 rm -fr flaskapp-hw
                 """
         }
