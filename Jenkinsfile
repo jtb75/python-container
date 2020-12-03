@@ -10,6 +10,7 @@ node {
             echo 'Cleaning up Image..'
             sh """
             id
+            docker images
             rm -fr flaskapp-hw
             """
         }
