@@ -1,8 +1,15 @@
-node {
-        stage('Clone') {
+env.gitrepo = 'https://github.com/jtb75/flaskapp-hw.git'
+env.repo = 'harbor.ng20.org/build/flaskapp-hw'
+env.registry = 'https://harbor.ng20.org'
+env.registryCredential = 'harbor-creds'
+env.dockerImage = ''
+
+
+node ('jenkins-agent'){
                 echo 'Cloning Repo..'
+                git gitrepo
                 sh """
-                git clone https://github.com/jtb75/flaskapp-hw.git
+                sed -i 's/BUILDNUMBER/$BUILD_NUMBER/' Dockerfile
                 """
         }
         stage ('Build') {
