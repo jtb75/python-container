@@ -4,7 +4,6 @@ env.registry = 'https://harbor.ng20.org'
 env.registryCredential = 'harbor-creds'
 env.dockerImage = ''
 
-
 node ('jenkins-agent'){
                 echo 'Cloning Repo..'
                 git gitrepo
@@ -13,29 +12,22 @@ node ('jenkins-agent'){
                 """
         }
         stage ('Build') {
-                echo 'Building Image..'
-                sh """
-                cd flaskapp-hw
-                docker build -t flaskapp-hw:$BUILD_NUMBER .
-                cd ..
-                rm -fr flaskapp-hw
-                """
+                container('build') {
+                        echo 'Building Image..'
+                        script {
+                                dockerImage = docker.build repo + ":$BUILD_NUMBER"
+                        }
+                }
         }
         stage ('Scan') {
-                echo 'Scan for Compliance and Vulnerabilities..'
-                prismaCloudScanImage ca: '', cert: '',
-                        dockerAddress: 'unix:///var/run/docker.sock',
-                        ignoreImageBuildTime: true,
-                        image: 'flaskapp-hw:$BUILD_NUMBER',
-                        key: '',
-                        logLevel: 'info',
-                        podmanPath: '',
-                        project: '',
-                        resultsFile: 'prisma-cloud-scan-results.json'
-                prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
-                sh """
-                rm prisma-cloud-scan-results.json
-                """
+                container('build') {
+                        echo 'Scan for Compliance and Vulnerabilities..'
+                        prismaCloudScanImage ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock',
+                                image: repo +':$BUILD_NUMBER', key: '',
+                                logLevel: 'info', podmanPath: '', project: '',
+                                resultsFile: 'prisma-cloud-scan-results.json'
+                        prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+                }
         }
         stage ('Test') {
                 echo 'Running Test Harness..'
@@ -45,14 +37,22 @@ node ('jenkins-agent'){
         }
         stage ('Push') {
                 echo 'Push Image to Registry..'
-                sh """
-                sleep 2
-                """
+                container('build') {
+                        script {
+                                docker.withRegistry( registry, registryCredential ) {
+                                        dockerImage.push()
+                                        dockerImage.push('latest')
+                                }
+                        }
+                }
         }
         stage ('Cleanup') {
-                echo 'Cleaning up Image..'
-                sh """
-                docker rmi flaskapp-hw:$BUILD_NUMBER
-                """
+                container('build') {
+                        echo 'Cleaning up Image..'
+                        sh """
+                        docker rmi $repo:$BUILD_NUMBER
+                        docker rmi $repo:latest
+                        """
+                }
         }
 }
