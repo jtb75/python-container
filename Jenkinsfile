@@ -5,6 +5,7 @@ env.registryCredential = 'harbor-creds'
 env.dockerImage = ''
 
 node ('jenkins-agent'){
+        stage('Clone') {
                 echo 'Cloning Repo..'
                 git gitrepo
                 sh """
