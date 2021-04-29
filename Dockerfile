@@ -1,4 +1,4 @@
-FROM python:3.5.1
+FROM python:3.6.13
 LABEL project="DevImages"
 LABEL maintainer="joe.buhr@gmail.com"
 LABEL version="1.BUILDNUMBER"
