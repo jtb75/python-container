@@ -15,7 +15,10 @@ node ('jenkins-agent'){
                         prismaCloudScanCode excludedPaths: '', explicitFiles: '',
                               logLevel: 'info', pythonVersion: '', repositoryName: repo,
                               repositoryPath: '.', resultsFile: 'prisma-cloud-scan-results.json'
-                 }
+                        sh """
+                        chmod 666 prisma-cloud-scan-results.json
+                        """
+                }
         }
         stage ('Publish') {
                 container('build') {
