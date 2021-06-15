@@ -18,6 +18,12 @@ node ('jenkins-agent'){
                               repositoryPath: '.', resultsFile: 'prisma-cloud-scan-results.json'
                  }
         }
+        stage ('Publish') {
+                container('build') {
+                        echo 'Publish Compliance and Vulnerabilities results..'
+                        prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+                }
+        }
         stage ('Cleanup') {
                 container('build') {
                         echo 'Cleaning up Image..'
