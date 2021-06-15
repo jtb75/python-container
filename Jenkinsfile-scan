@@ -10,6 +10,9 @@ node ('jenkins-agent'){
         stage ('Scan') {
                 container('build') {
                         echo 'Scan for Compliance and Vulnerabilities..'
+                        sh """
+                        sleep 600
+                        """
                         prismaCloudScanCode excludedPaths: '', explicitFiles: '',
                               logLevel: 'info', pythonVersion: '', repositoryName: 'jtb75',
                               repositoryPath: 'flaskapp-hw', resultsFile: 'prisma-cloud-scan-results.json'
