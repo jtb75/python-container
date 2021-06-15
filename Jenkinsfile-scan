@@ -5,7 +5,7 @@ env.repo = 'jtb75'
 node ('jenkins-agent'){
         stage('Clone') {
                 echo 'Cloning Repo..'
-                git giturl + repo + gitrepo
+                git giturl + '/' + repo + '/' + gitrepo
         }
         stage ('Scan') {
                 container('build') {
