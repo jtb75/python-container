@@ -1,0 +1,24 @@
+env.giturl = 'https://github.com'
+env.gitrepo = 'flaskapp-hw.git'
+env.repo = 'jtb75'
+
+node ('jenkins-agent'){
+        stage('Clone') {
+                echo 'Cloning Repo..'
+                git giturl + repo + gitrepo
+        }
+        stage ('Scan') {
+                container('build') {
+                        echo 'Scan for Compliance and Vulnerabilities..'
+                        prismaCloudScanCode excludedPaths: '', explicitFiles: '',
+                              logLevel: 'info', pythonVersion: '', repositoryName: 'jtb75',
+                              repositoryPath: 'flaskapp-hw', resultsFile: 'prisma-cloud-scan-results.json'
+                 }
+        }
+        stage ('Cleanup') {
+                container('build') {
+                        echo 'Cleaning up Image..'
+
+                }
+        }
+}
