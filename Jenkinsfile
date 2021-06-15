@@ -46,21 +46,21 @@ node ('jenkins-agent'){
         }
         stage ('Push') {
                 echo 'Push Image to Registry..'
+                /*
                 container('build') {
                         script {
                                 docker.withRegistry( registry, registryCredential ) {
                                         dockerImage.push()
-                                        dockerImage.push('latest')
                                 }
                         }
                 }
+                */
         }
         stage ('Cleanup') {
                 container('build') {
                         echo 'Cleaning up Image..'
                         sh """
                         docker rmi $repo:$BUILD_NUMBER
-                        docker rmi $repo:latest
                         """
                 }
         }
